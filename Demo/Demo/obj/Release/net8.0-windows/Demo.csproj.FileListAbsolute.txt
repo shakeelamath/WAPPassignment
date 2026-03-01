@@ -1,7 +1,0 @@
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.Form1.resources
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.Properties.Resources.resources
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.csproj.GenerateResource.cache
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.AssemblyInfoInputs.cache
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.AssemblyInfo.cs
-C:\Users\CYBORG\source\repos\Demo\Demo\obj\Release\net8.0-windows\Demo.csproj.CoreCompileInputs.cache
