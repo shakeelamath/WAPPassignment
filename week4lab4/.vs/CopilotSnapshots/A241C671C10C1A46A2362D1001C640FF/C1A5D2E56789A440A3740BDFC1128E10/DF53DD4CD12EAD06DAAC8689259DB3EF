@@ -1,0 +1,84 @@
+﻿using System;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.UI.WebControls;
+using BCrypt.Net;
+
+namespace week4lab4
+{
+    public partial class register : System.Web.UI.Page
+    {
+        protected TextBox username;
+        protected TextBox fname;
+        protected TextBox lname;
+        protected DropDownList gender;
+        protected TextBox country;
+        protected TextBox email;
+        protected TextBox pwd;
+        protected DropDownList usertype;
+        protected Label errMsg;
+        protected Button btnRegister;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void btnRegister_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(username.Text) || 
+                    string.IsNullOrWhiteSpace(fname.Text) || 
+                    string.IsNullOrWhiteSpace(pwd.Text))
+                {
+                    errMsg.Text = "Please fill in all required fields.";
+                    errMsg.Visible = true;
+                    return;
+                }
+
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                con.Open();
+
+                SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM userTable WHERE username = @username", con);
+                checkCmd.Parameters.AddWithValue("@username", username.Text);
+                int userExists = (int)checkCmd.ExecuteScalar();
+
+                if (userExists > 0)
+                {
+                    errMsg.Text = "Username already exists. Please choose a different username.";
+                    errMsg.ForeColor = System.Drawing.Color.Red;
+                    errMsg.Visible = true;
+                    con.Close();
+                    return;
+                }
+
+                string query = "INSERT INTO userTable (username, fname, lname, gender, country, email, password, usertype) " +
+                               "VALUES (@username, @fname, @lname, @gender, @country, @email, @password, @usertype)";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@username", username.Text);
+                cmd.Parameters.AddWithValue("@fname", fname.Text);
+                cmd.Parameters.AddWithValue("@lname", lname.Text);
+                cmd.Parameters.AddWithValue("@gender", gender.SelectedValue);
+                cmd.Parameters.AddWithValue("@country", country.Text);
+                cmd.Parameters.AddWithValue("@email", email.Text);
+                cmd.Parameters.AddWithValue("@password", pwd.Text);
+                cmd.Parameters.AddWithValue("@usertype", usertype.SelectedValue);
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                errMsg.Text = "Registration successful! Redirecting to login page...";
+                errMsg.ForeColor = System.Drawing.Color.Green;
+                errMsg.Visible = true;
+
+                Response.AddHeader("REFRESH", "2;URL=login.aspx");
+            }
+            catch (Exception ex)
+            {
+                errMsg.Text = "Error during registration: " + ex.Message;
+                errMsg.ForeColor = System.Drawing.Color.Red;
+                errMsg.Visible = true;
+            }
+        }
+    }
+}

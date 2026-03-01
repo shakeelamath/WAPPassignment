@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>I am fabulous</title>
+    <style type="text/css">
+        #header
+        {
+            height: 100px;
+            width: 900px;
+            background-color:#FF99CC;
+        }
+        #menu
+        {
+            width: 900px;
+            height: 50px;
+            background-color: #FF99CC;
+
+        }
+        #content1{
+            width: 450px;
+            float:left;
+            height:450px;
+            background-color:#ffcc66;
+            border-radius:25px;
+        }
+        #content2 {
+            width:450px;
+            float:right;
+            height:450px;
+            background:#cc99ff;
+            border-radius:25px;
+        }
+        #wrapper{
+            width:900px;
+            margin:0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="header">This is header</div>
+        <div id="menu">This is menu</div>
+        <div id="content1">Content 1</div>
+        <div id="content2">Content 2</div>
+    </div>
+
+</body>
+</html>

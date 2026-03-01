@@ -1,0 +1,114 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace week4lab4
+{
+    public partial class login : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSignIn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                con.Open();
+
+                // First, check if there are any users in the table
+                SqlCommand checkTable = new SqlCommand("SELECT COUNT(*) FROM userTable", con);
+                int totalUsers = (int)checkTable.ExecuteScalar();
+
+                if (totalUsers == 0)
+                {
+                    errormsg.Visible = true;
+                    errormsg.ForeColor = System.Drawing.Color.Red;
+                    errormsg.Text = "Database is empty. Please run InitializeDatabase.aspx first.";
+                    con.Close();
+                    return;
+                }
+
+                // Check for username match only
+                SqlCommand checkUser = new SqlCommand("SELECT COUNT(*) FROM userTable WHERE username = @username", con);
+                checkUser.Parameters.AddWithValue("@username", uname.Text.Trim());
+                int userExists = (int)checkUser.ExecuteScalar();
+
+                if (userExists == 0)
+                {
+                    errormsg.Visible = true;
+                    errormsg.ForeColor = System.Drawing.Color.Red;
+                    errormsg.Text = "Username not found!";
+                    con.Close();
+                    return;
+                }
+
+                // Check for username AND password match
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM userTable WHERE username = @username AND password = @password", con);
+                cmd.Parameters.AddWithValue("@username", uname.Text.Trim());
+                cmd.Parameters.AddWithValue("@password", password.Text);
+                int count = (int)cmd.ExecuteScalar();
+
+                if (count > 0)
+                {
+                    SqlCommand cmdType = new SqlCommand("SELECT fname, usertype FROM userTable WHERE username = @username", con);
+                    cmdType.Parameters.AddWithValue("@username", uname.Text.Trim());
+                    SqlDataReader dr = cmdType.ExecuteReader();
+
+                    string type = "";
+                    string name = "";
+
+                    while (dr.Read())
+                    {
+                        type = dr["usertype"].ToString().Trim();
+                        name = dr["fname"].ToString().Trim();
+                    }
+
+                    dr.Close();
+
+                    Session["firstName"] = name;
+                    Session["username"] = uname.Text.Trim();
+                    Session["usertype"] = type;
+
+                    con.Close();
+
+                    // Case-insensitive comparison
+                    if (type.ToLower() == "admin")
+                        Response.Redirect("adminDashboard.aspx");
+                    else if (type.ToLower() == "member")
+                        Response.Redirect("editUserProfile.aspx");
+                    else
+                    {
+                        errormsg.Visible = true;
+                        errormsg.ForeColor = System.Drawing.Color.Red;
+                        errormsg.Text = "Invalid user type: '" + type + "'. Expected 'admin' or 'member'.";
+                    }
+                }
+                else
+                {
+                    errormsg.Visible = true;
+                    errormsg.ForeColor = System.Drawing.Color.Red;
+                    errormsg.Text = "Incorrect password!";
+                }
+            }
+            catch (Exception ex)
+            {
+                errormsg.Visible = true;
+                errormsg.ForeColor = System.Drawing.Color.Red;
+                errormsg.Text = "Error: " + ex.Message;
+            }
+        }
+
+        protected void uname_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

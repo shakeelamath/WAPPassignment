@@ -1,0 +1,58 @@
+# Visual Studio
+.vs/
+Generated Files/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# User-specific files
+*.rsuser
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+
+# Visual Studio Code
+.vscode/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# SQL Server databases
+*.mdf
+*.ldf
+App_Data/*.mdf
+
+# Uploads and runtime files
+Uploads/
+Content/planets/
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# Git snapshots used by Copilot, ignore large internal snapshots
+WAPPAssignment/.vs/
+
+# NuGet
+*.nupkg
+packages/
+
+# Resharper
+_ReSharper*/
+
+# Others
+*.DS_Store
+*.class
+
+# Ignore zipped project exports
+*.zip

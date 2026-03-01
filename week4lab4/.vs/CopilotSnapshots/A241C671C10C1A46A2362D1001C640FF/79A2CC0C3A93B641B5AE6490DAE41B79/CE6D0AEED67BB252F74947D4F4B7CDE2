@@ -1,0 +1,128 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Data.Sql;
+
+namespace week4lab4
+{
+    public partial class editUserProfile : System.Web.UI.Page
+    {
+        protected TextBox fname;
+        protected TextBox lname;
+        protected DropDownList gender;
+        protected TextBox country;
+        protected TextBox email;
+        protected TextBox pwd;
+        protected Label errMsg;
+        protected Label usertype;
+        protected Label lblWelcome;
+        protected Button btnSave;
+        protected FileUpload FileUpload1;
+        protected Image Image1;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["firstName"] != null)
+            {
+                lblWelcome.Text = "Hi, " + Session["firstName"].ToString();
+            }
+            else
+            {
+                Response.Redirect("login.aspx");
+            }
+
+            if (!Page.IsPostBack)
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                con.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter("select * from userTable where username = '" + Session["username"] + "'", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    fname.Text = dt.Rows[0]["fname"].ToString();
+                    lname.Text = dt.Rows[0]["lname"].ToString();
+                    
+                    string genderValue = dt.Rows[0]["gender"].ToString();
+                    if (gender.Items.FindByValue(genderValue) != null)
+                    {
+                        gender.SelectedValue = genderValue;
+                    }
+                    else
+                    {
+                        gender.SelectedIndex = 0;
+                    }
+                    
+                    country.Text = dt.Rows[0]["country"].ToString();
+                    email.Text = dt.Rows[0]["email"].ToString();
+                    pwd.Text = dt.Rows[0]["password"].ToString();
+                    usertype.Text = dt.Rows[0]["usertype"].ToString();
+                    
+                    if (dt.Rows[0]["ImgPath"] != DBNull.Value && !string.IsNullOrEmpty(dt.Rows[0]["ImgPath"].ToString()))
+                    {
+                        Image1.ImageUrl = dt.Rows[0]["ImgPath"].ToString();
+                    }
+                }
+
+                con.Close();
+            }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string folderPath = Server.MapPath("~/ProfilePic/");
+                
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string ImgPath = "";
+
+                if (FileUpload1.HasFile)
+                {
+                    ImgPath = "~/ProfilePic/" + FileUpload1.FileName.ToString();
+                    FileUpload1.SaveAs(folderPath + Path.GetFileName(FileUpload1.FileName));
+                }
+                else
+                {
+                    ImgPath = Image1.ImageUrl;
+                }
+
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+                con.Open();
+
+                string query = "update userTable set fname ='" + fname.Text + "',lname ='" + lname.Text
+                    + "',gender ='" + gender.SelectedValue + "',country ='" + country.Text
+                    + "',email ='" + email.Text + "',password ='" + pwd.Text
+                    + "',usertype ='" + usertype.Text + "',ImgPath ='" + ImgPath + "'"
+                    + " where username = '" + Session["username"] + "'";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                
+                Session["firstName"] = fname.Text;
+
+                Response.Redirect("editUserProfile.aspx");
+            }
+            catch (Exception ex)
+            {
+                errMsg.Text = "Error updating profile: " + ex.Message;
+                errMsg.ForeColor = System.Drawing.Color.Red;
+                errMsg.Visible = true;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,2 @@
+﻿ALTER TABLE userTable 
+ADD ImgPath NVARCHAR(255) NULL

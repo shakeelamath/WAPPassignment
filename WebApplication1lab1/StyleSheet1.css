@@ -1,0 +1,101 @@
+﻿/* Wrapper */
+#wrapper {
+    width: 900px;
+    margin: 0 auto;
+}
+
+/* Header */
+#header {
+    height: 100px;
+    width: 900px;
+    background-color: #FF99CC;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Menu */
+#menu {
+    width: 900px;
+    height: 50px;
+    background-color: #CCFF99;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 20px;
+}
+
+/* Content 1 */
+#content1 {
+    width: 450px;
+    float: left;
+    height: 450px;
+    background-color: #ffcc66;
+    border-radius: 25px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* Content 2 */
+#content2 {
+    width: 450px;
+    float: right;
+    height: 450px;
+    background-color: #cc99ff;
+    border-radius: 25px;
+    text-align: center;
+    background-image: url('confectionary.jpeg');
+    background-size: cover;
+    padding-top: 20px;
+}
+
+/* Contact Form Section */
+#form-section {
+    clear: both;
+    width: 900px;
+    margin-top: 30px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+    #form-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+
+    form label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    form input,
+    form textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-top: 5px;
+    }
+
+    form button {
+        margin-top: 20px;
+        padding: 12px;
+        border: none;
+        background-color: #FF99CC;
+        color: black;
+        font-size: 18px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+        form button:hover {
+            background-color: #ff66aa;
+        }

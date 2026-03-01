@@ -1,0 +1,85 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="manageUser.aspx.cs" Inherits="week4lab4.manageUser" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Manage Member Profile</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <h1>Manage Member Profile</h1>
+            
+            <asp:Label ID="svfname" runat="server" Text=""></asp:Label>
+            <asp:Label ID="errMsg" runat="server" Text=""></asp:Label>
+            <asp:Label ID="usertype" runat="server" Text=""></asp:Label>
+            
+            <table>
+                <tr>
+                    <td>1</td>
+                    <td>UserName:</td>
+                    <td>
+                        <asp:DropDownList ID="uname" runat="server" AutoPostBack="True" OnSelectedIndexChanged="uname_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>First Name:</td>
+                    <td>
+                        <asp:TextBox ID="fname" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Last Name:</td>
+                    <td>
+                        <asp:TextBox ID="lname" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Gender:</td>
+                    <td>
+                        <asp:DropDownList ID="gender" runat="server">
+                            <asp:ListItem>F</asp:ListItem>
+                            <asp:ListItem>M</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Country:</td>
+                    <td>
+                        <asp:TextBox ID="country" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Email:</td>
+                    <td>
+                        <asp:TextBox ID="email" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Password:</td>
+                    <td>
+                        <asp:TextBox ID="pwd" runat="server" TextMode="Password"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <asp:Button ID="btnSave" runat="server" Text="Save" />
+                    </td>
+                    <td>
+                        <asp:Button ID="btnRemove" runat="server" Text="Remove" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

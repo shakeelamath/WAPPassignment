@@ -1,0 +1,100 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WAPPAssignment.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - CosmoQuest Learning System</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/Content/CosmoQuest.css" rel="stylesheet" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" runat="server" href="~/">🌌 CosmoQuest</a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">🏠 Home</a></li>
+                        
+                        <!-- Guest Navigation -->
+                        <li class="nav-item" id="navSolarSystem" runat="server"><a class="nav-link" runat="server" href="~/SolarSystem.aspx">🪐 Solar System</a></li>
+                        
+                        <!-- Member Navigation -->
+                        <li class="nav-item" id="navMemberDashboard" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Member/Dashboard.aspx">📊 Dashboard</a></li>
+                        <li class="nav-item" id="navMemberSolarSystem" runat="server" visible="false"><a class="nav-link" runat="server" href="~/SolarSystem.aspx">🪐 Solar System</a></li>
+                        <li class="nav-item" id="navQuizzes" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Member/Quizzes.aspx">📝 Quizzes</a></li>
+                        <li class="nav-item" id="navDiscussion" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Member/Discussion.aspx">💬 Discussion</a></li>
+                        
+                        <!-- Admin Navigation -->
+                        <li class="nav-item" id="navAdminDashboard" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Admin/Dashboard.aspx">👨‍💼 Admin Dashboard</a></li>
+                        <li class="nav-item" id="navManageContent" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Admin/ManageContent.aspx">📚 Manage Content</a></li>
+                        <li class="nav-item" id="navManageUsers" runat="server" visible="false"><a class="nav-link" runat="server" href="~/Admin/ManageUsers.aspx">👥 Manage Users</a></li>
+                    </ul>
+                    
+                    <ul class="navbar-nav">
+                        <!-- Guest Auth Links -->
+                        <li class="nav-item" id="navLogin" runat="server"><a class="nav-link" runat="server" href="~/Account/Login.aspx">🔐 Login</a></li>
+                        <li class="nav-item" id="navRegister" runat="server"><a class="nav-link" runat="server" href="~/Account/Register.aspx">📝 Register</a></li>
+                        
+                        <!-- Logged In User Info -->
+                        <li class="nav-item" id="navUserInfo" runat="server" visible="false">
+                            <span class="nav-link" style="color: var(--cosmic-gold);">
+                                👤 <asp:Label ID="lblUsername" runat="server"></asp:Label>
+                            </span>
+                        </li>
+                        <li class="nav-item" id="navLogout" runat="server" visible="false">
+                            <asp:LinkButton ID="btnLogout" runat="server" CssClass="nav-link" OnClick="Logout_Click">
+                                🚪 Logout
+                            </asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - CosmoQuest Learning System | Exploring the Universe Together 🌟</p>
+            </footer>
+        </div>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>
